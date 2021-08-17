@@ -29,13 +29,13 @@ impl<'a> Server<'a> {
    }
    pub fn start(&mut self) {
 
-      self.debugger.debug_line("Starting server");
-      self.debugger.debug_line(self.listen_string().as_str());
-
+      self.debugger.debug_line("Starting Rust HTTP Server [v0.1]");
       let listener = TcpListener::bind(self.listen_string());
+      self.debugger.debug_line(&format!("Listening on {}", self.listen_string().as_str()));
 
       match listener {
           Ok(connection) => {
+            self.debugger.debug_line("Accepting connections...");
             for stream in connection.incoming() {
               let mut stream = stream.unwrap();
               self.handle(stream);
