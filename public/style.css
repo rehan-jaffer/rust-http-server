@@ -1,0 +1,14 @@
+body {
+  background-color: #000;
+  display: flex;
+  place-items: center;
+  min-width: 95vw;
+  min-height: 95vh;
+}
+
+h1 { 
+  width: 100%;
+  font-family: "Helvetica";
+  color: #fff;
+  text-align: center;
+}

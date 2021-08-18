@@ -6,6 +6,7 @@ use std::thread;
 use threadpool::ThreadPool;
 use std::sync::{Arc, Mutex};
 mod debugger;
+mod plugins;
 
 use super::linescodec;
 
@@ -24,7 +25,7 @@ impl<'a> Server<'a> {
        port: port,
        debug_mode: debug, 
        debugger: debugger::Debugger { enabled: debug },
-       pool: ThreadPool::new(4)
+       pool: ThreadPool::new(4),
       }
    }
    pub fn start(&mut self) {
@@ -86,10 +87,7 @@ impl<'a> RequestHandler<'a> {
 
     let ip = self.stream.peer_addr().unwrap();
 
-    let response = super::http::response::HTTPResponse { 
-      status: super::http::response::HTTPResponseType::Ok,
-      content: "hi".to_string()
-    };
+    let response = plugins::file::File::execute(&request);
 
     self.debugger.debug_request(request, response.clone(), ip);
 
