@@ -5,6 +5,7 @@ use std::fmt::{Display, Formatter, Result};
 use std::thread;
 use threadpool::ThreadPool;
 use std::sync::{Arc, Mutex};
+
 mod debugger;
 mod plugins;
 
@@ -19,6 +20,7 @@ pub struct Server<'a> {
 }
 
 impl<'a> Server<'a> {
+
    pub fn new(listen_addr: &'a str, port: u32, debug: bool) -> Self {
      Self { 
        listen_address: listen_addr,
@@ -28,6 +30,7 @@ impl<'a> Server<'a> {
        pool: ThreadPool::new(4),
       }
    }
+
    pub fn start(&mut self) {
 
       self.debugger.debug_line("Starting Rust HTTP Server [v0.1]");
@@ -51,7 +54,9 @@ impl<'a> Server<'a> {
     }
 
     fn listen_string(&self) -> String {
-        return format!("{}:{}", self.listen_address, self.port)
+
+      return format!("{}:{}", self.listen_address, self.port)
+
     }
 
     fn handle(&mut self, stream: TcpStream) {
@@ -59,6 +64,7 @@ impl<'a> Server<'a> {
       let arc_stream = Arc::new(stream);
 
       self.pool.execute(move || {
+
         let mut handler = RequestHandler { 
           stream: &mut arc_stream.try_clone().unwrap(), 
           debugger: debugger::Debugger { enabled: true } 
