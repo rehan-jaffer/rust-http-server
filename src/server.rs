@@ -57,7 +57,7 @@ impl<'a> Server<'a> {
           Ok(connection) => {
             self.debugger.debug_line("Accepting connections...");
             for stream in connection.incoming() {
-              let mut stream = stream.unwrap();
+              let stream = stream.unwrap();
               self.handle(stream);
             }
 

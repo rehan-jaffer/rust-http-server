@@ -15,7 +15,8 @@ impl HTTPRequestParser {
   
         return Some(super::request::HTTPRequest { 
           verb: verb, 
-          path: path 
+          path: path,
+          headers: headers
         })
     }
   

@@ -10,4 +10,5 @@ pub enum HTTPRequestType {
 pub struct HTTPRequest {
     pub verb: HTTPRequestType,
     pub path: String,
+    pub headers: super::headers::HTTPHeaders
 }

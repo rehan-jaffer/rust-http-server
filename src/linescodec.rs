@@ -14,7 +14,14 @@ impl LinesCodec {
     }
 
     pub fn send(&mut self, res: super::http::response::HTTPResponse) {
-        self.writer.write_all(format!("{}\r\n", res).as_bytes());
+        match self.writer.write_all(format!("{}\r\n", res).as_bytes()) {
+          Ok(_) => {
+
+          }
+          Err(_) => {
+
+          }
+        }
     }
 
     pub fn get_lines(&mut self) -> Result<Vec<String>, &str> {
@@ -24,7 +31,7 @@ impl LinesCodec {
         let mut message = String::new();
         match self.reader.read_line(&mut message) {
             Ok(2) => {
-              if (message == "\r\n") {
+              if message == "\r\n" {
                   break 'outer;
               }
             },
