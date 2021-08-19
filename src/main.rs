@@ -10,7 +10,7 @@ fn main() {
   let mut parser = cmd::parser::CommandLineParser::new(args);
   let opts = parser.parse();
 
-  let mut server = server::Server::new(opts.listen_address, opts.port, true);
+  let mut server = server::Server::new(opts);
   server.start();
 
 }
